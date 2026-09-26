@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Aymane Azaagag 🚀
 
-## Getting Started
+> **Data & AI Engineer** | Élève-Ingénieur en 5e année à l'**ENSA Tétouan**  
+> Spécialisé en **Data Engineering Multi-Cloud (AWS, Azure, Snowflake, dbt)** & **AI Engineering (Systèmes Multi-Agents, LangGraph, RAG, GenAI)**.  
+> 🎯 **Recherche activement un Stage de Fin d'Études (PFE)**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌟 Aperçu du Portfolio
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ce portfolio a été conçu avec une esthétique moderne et interactive :
+- **Dark Mode Cyberpunk / Glassmorphism** avec effets de flou néon et dégradés soignés.
+- **Hero dynamique** : Effet machine à écrire présentant les spécialisations et badge d'état.
+- **Background animé de particules** : Réseau de particules interconnectées en Canvas 2D.
+- **Section Expérience interactive** : Timeline valorisant le stage chez **Bank Al-Maghrib** (système multi-agents GenAI, RAG Qdrant, Ollama, MLflow, Arize Phoenix, RAGAS).
+- **Compétences visuelles** : Barres de progression animées au défilement et tags technologiques interactifs.
+- **Filtre de projets par catégorie** : Animation fluide par catégorie (*Data Engineering, AI Engineering, Computer Vision, etc.*).
+- **Section Formation** : Parcours académique à l'ENSA Tétouan & certifications.
+- **Formulaire de contact & Réseaux** : Liens directs vers LinkedIn, GitHub et email.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Stack Technique
 
-## Learn More
+- **Framework** : [Next.js 16](https://nextjs.org/) (App Router, Turbopack)
+- **UI Library** : [React 19](https://react.dev/)
+- **Langage** : [TypeScript](https://www.typescriptlang.org/)
+- **Styles** : [Tailwind CSS v4](https://tailwindcss.com/) & Vanilla CSS custom
+- **Animations** : [Framer Motion](https://www.framer.com/motion/)
+- **Icônes** : [Lucide React](https://lucide.dev/)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Lancement en local
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Cloner le dépôt** :
+   ```bash
+   git clone https://github.com/aymanz12/portfolio.git
+   cd portfolio
+   ```
 
-## Deploy on Vercel
+2. **Installer les dépendances** :
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Démarrer le serveur de développement** :
+   ```bash
+   npm run dev
+   ```
+   Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Compiler pour la production** :
+   ```bash
+   npm run build
+   npm run start
+   ```
+
+---
+
+## 🌐 Déploiement
+
+Ce projet est prêt pour un déploiement instantané sur **[Vercel](https://vercel.com/)** en 1 clic.
+
+---
+
+## 📬 Contact & Liens
+
+- **LinkedIn** : [aymane-azaagag](https://www.linkedin.com/in/aymane-azaagag-912816330/)
+- **GitHub** : [@aymanz12](https://github.com/aymanz12)
