@@ -16,40 +16,52 @@ interface ProjectItem {
 
 const projectMeta: Record<number, { tags: string[]; color: string; emoji: string; github: string }> = {
   1: {
-    tags: ["LangGraph", "Ollama", "Multi-Agent", "Python", "GenAI"],
+    tags: ["LangGraph", "Groq LPU", "Multi-Agent", "SQL / ETL", "Python"],
     color: "#7c3aed",
     emoji: "🤖",
     github: "https://github.com/aymanz12/AI-data-Agent-",
   },
   2: {
-    tags: ["Qdrant", "RAG", "MLflow", "RAGAS", "Vector DB"],
+    tags: ["LangGraph", "Neo4j", "Qdrant", "SEC 10-K", "Streamlit"],
     color: "#8b5cf6",
-    emoji: "🔍",
+    emoji: "📈",
     github: "https://github.com/aymanz12/veritas-agentic-rag",
   },
   3: {
-    tags: ["Streaming", "Python", "Real-Time", "Data Pipelines", "API"],
-    color: "#f59e0b",
-    emoji: "₿",
-    github: "https://github.com/aymanz12/Real-Time-Crypto-Tracker",
+    tags: ["FastMCP", "Whisper", "ChromaDB", "Groq LLM", "Video RAG"],
+    color: "#06b6d4",
+    emoji: "🎬",
+    github: "https://github.com/aymanz12/-MCP-Powered-Video-RAG-",
   },
   4: {
-    tags: ["AWS / Azure", "Snowflake", "dbt", "Delta Lake", "Medallion"],
+    tags: ["AWS Glue", "PySpark", "Delta Lake", "Athena", "Power BI"],
     color: "#3b82f6",
     emoji: "🏭",
     github: "https://github.com/aymanz12/manufacturing-quality-lakehouse",
   },
   5: {
-    tags: ["Power BI", "SQL", "ETL", "Data Modeling", "Analytics"],
-    color: "#10b981",
-    emoji: "📊",
-    github: "https://github.com/aymanz12/Project_BI",
+    tags: ["Apache Kafka", "Apache Flink", "ClickHouse", "Grafana", "Docker"],
+    color: "#f59e0b",
+    emoji: "⚡",
+    github: "https://github.com/aymanz12/Real-Time-Crypto-Tracker",
   },
   6: {
-    tags: ["Python", "Scikit-Learn", "MLOps", "IoT", "Time Series"],
+    tags: ["Airbyte", "Snowflake", "dbt", "Star Schema", "Power BI"],
+    color: "#10b981",
+    emoji: "❄️",
+    github: "https://github.com/aymanz12/Project_BI",
+  },
+  7: {
+    tags: ["XGBoost", "MLflow", "DVC", "AWS Fargate", "Docker"],
     color: "#ec4899",
     emoji: "⚙️",
     github: "https://github.com/aymanz12/predictive-maintenance",
+  },
+  8: {
+    tags: ["PatchCore", "PyTorch", "FastAPI", "Gradio", "Anomaly Detection"],
+    color: "#ef4444",
+    emoji: "🔬",
+    github: "https://github.com/aymanz12/deep_learning_project",
   },
 };
 
