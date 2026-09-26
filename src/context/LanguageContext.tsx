@@ -62,7 +62,7 @@ export const translations = {
       stats: {
         bac: { value: "Bac+5", label: "Niveau d'études", sub: "ENSA Tétouan (2026)" },
         exp: { value: "2+", label: "Expériences en entreprise", sub: "Banque Centrale & INTELLCAP" },
-        projects: { value: "10+", label: "Projets Data & AI", sub: "Multi-Cloud & GenAI" },
+        projects: { value: "8+", label: "Projets Data & AI", sub: "Multi-Cloud & GenAI" },
         readiness: { value: "100%", label: "Opérationnel", sub: "Prêt pour le PFE" },
       },
     },
@@ -312,7 +312,7 @@ export const translations = {
       stats: {
         bac: { value: "M.Sc. / Eng", label: "Academic Level", sub: "ENSA Tetouan (2026)" },
         exp: { value: "2+", label: "Industry Internships", sub: "Central Bank & INTELLCAP" },
-        projects: { value: "10+", label: "Data & AI Projects", sub: "Multi-Cloud & GenAI" },
+        projects: { value: "8+", label: "Data & AI Projects", sub: "Multi-Cloud & GenAI" },
         readiness: { value: "100%", label: "Operational", sub: "Ready for PFE" },
       },
     },
