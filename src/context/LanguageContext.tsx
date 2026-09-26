@@ -60,7 +60,7 @@ export const translations = {
       p3: "J'ai également développé une plateforme de détection des mauvaises herbes par Computer Vision (YOLOv11) lors de mon stage chez INTELLCAP. Je conçois et déploie des projets de Data Engineering multi-cloud (AWS, Azure, Snowflake, dbt), avec des architectures Medallion modernes, des pipelines ELT/ETL robustes et des Lakehouses à haute performance.",
       quote: "Je recherche un Stage de Fin d'Études (PFE) stimulant en Data Engineering ou AI Engineering — prêt à apporter une réelle valeur ajoutée au sein d'une équipe ambitieuse.",
       stats: {
-        bac: { value: "Bac+5", label: "Niveau d'études", sub: "ENSA Tétouan (2026)" },
+        bac: { value: "Bac+5", label: "Niveau d'études", sub: "ENSA Tétouan (2027)" },
         exp: { value: "2+", label: "Expériences en entreprise", sub: "Banque Centrale & INTELLCAP" },
         projects: { value: "8+", label: "Projets Data & AI", sub: "Multi-Cloud & GenAI" },
         readiness: { value: "100%", label: "Opérationnel", sub: "Prêt pour le PFE" },
@@ -238,7 +238,7 @@ export const translations = {
       title: "Discutons Ensemble",
       subtitle: "Vous recherchez un stagiaire PFE passionné et opérationnel en Data ou AI Engineering ? Envoyez-moi un message !",
       available_title: "Statut de Disponibilité",
-      available_desc: "Actuellement à la recherche d'un Stage de Fin d'Études (PFE) conventionné de 4 à 6 mois à partir de début 2026. Disponible sur site, hybride ou remote.",
+      available_desc: "Actuellement à la recherche d'un Stage de Fin d'Études (PFE) conventionné de 4 à 6 mois à partir de début 2027. Disponible sur site, hybride ou remote.",
       form: {
         name: "Nom complet",
         name_placeholder: "Ex: Sarah Martin",
@@ -310,7 +310,7 @@ export const translations = {
       p3: "I also built an agritech Computer Vision weed detection platform (YOLOv11) during my internship at INTELLCAP. I actively architect and build multi-cloud Data Engineering systems (AWS, Azure, Snowflake, dbt), featuring modern Medallion pipelines, robust ELT/ETL workflows, and high-performance Lakehouses.",
       quote: "I am actively seeking a high-impact End-of-Studies Internship (PFE) in Data Engineering or AI Engineering — eager to bring tangible value to an ambitious team.",
       stats: {
-        bac: { value: "M.Sc. / Eng", label: "Academic Level", sub: "ENSA Tetouan (2026)" },
+        bac: { value: "M.Sc. / Eng", label: "Academic Level", sub: "ENSA Tetouan (2027)" },
         exp: { value: "2+", label: "Industry Internships", sub: "Central Bank & INTELLCAP" },
         projects: { value: "8+", label: "Data & AI Projects", sub: "Multi-Cloud & GenAI" },
         readiness: { value: "100%", label: "Operational", sub: "Ready for PFE" },
@@ -488,7 +488,7 @@ export const translations = {
       title: "Let's Connect",
       subtitle: "Looking for an ambitious, hands-on PFE intern in Data or AI Engineering? Send me a message!",
       available_title: "Internship Availability",
-      available_desc: "Actively seeking a 4 to 6-month Final Year Internship (PFE) starting early 2026. Available on-site, hybrid, or remote.",
+      available_desc: "Actively seeking a 4 to 6-month Final Year Internship (PFE) starting early 2027. Available on-site, hybrid, or remote.",
       form: {
         name: "Full Name",
         name_placeholder: "e.g. Sarah Miller",
