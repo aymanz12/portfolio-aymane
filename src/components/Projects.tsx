@@ -1,258 +1,223 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "framer-motion";
-import { ExternalLink, Star, GitFork } from "lucide-react";
+import { ExternalLink, Star } from "lucide-react";
 import { Github } from "./Icons";
+import { useLanguage } from "@/context/LanguageContext";
 
-const projects = [
-  {
-    id: 1,
-    title: "AI Data Agent",
-    subtitle: "Système d'agents IA autonomes",
-    description:
-      "Agent IA autonome capable d'interroger, analyser et synthétiser des données structurées et non structurées via une architecture multi-agents. Intègre des outils de RAG et de reasoning avancé.",
-    tags: ["LangGraph", "RAG", "Python", "Multi-Agent", "GenAI"],
+interface ProjectItem {
+  id: number;
+  title: string;
+  subtitle: string;
+  description: string;
+  category: string;
+}
+
+const projectMeta: Record<number, { tags: string[]; color: string; emoji: string; github: string }> = {
+  1: {
+    tags: ["LangGraph", "Ollama", "Multi-Agent", "Python", "GenAI"],
     color: "#7c3aed",
     emoji: "🤖",
     github: "https://github.com/aymanz12/AI-data-Agent-",
-    category: "AI Engineering",
   },
-  {
-    id: 2,
-    title: "Veritas Agentic RAG",
-    subtitle: "RAG agentique haute fidélité",
-    description:
-      "Système RAG agentique avancé conçu pour fournir des réponses précises et vérifiables. Pipeline complet d'ingestion, indexation vectorielle, et génération augmentée avec vérification de la factualité.",
-    tags: ["RAG", "Qdrant", "LangChain", "Python", "Vector DB"],
+  2: {
+    tags: ["Qdrant", "RAG", "MLflow", "RAGAS", "Vector DB"],
     color: "#8b5cf6",
     emoji: "🔍",
     github: "https://github.com/aymanz12/veritas-agentic-rag",
-    category: "AI Engineering",
   },
-  {
-    id: 3,
-    title: "Real-Time Crypto Tracker",
-    subtitle: "Tracking crypto temps réel",
-    description:
-      "Pipeline de données temps réel pour le tracking des cryptomonnaies. Ingestion de flux de données en streaming, agrégation, stockage et visualisation en temps réel des cours et métriques.",
-    tags: ["Streaming", "Python", "Real-Time", "Dashboard", "API"],
+  3: {
+    tags: ["Streaming", "Python", "Real-Time", "Data Pipelines", "API"],
     color: "#f59e0b",
     emoji: "₿",
     github: "https://github.com/aymanz12/Real-Time-Crypto-Tracker",
-    category: "Data Engineering",
   },
-  {
-    id: 4,
-    title: "Manufacturing Quality Lakehouse",
-    subtitle: "Architecture Medallion & Multi-Cloud Data Engineering",
-    description:
-      "Architecture Lakehouse complète (Bronze/Silver/Gold) pour la gestion de la qualité industrielle. Pipelines ELT/ETL multi-cloud, transformations dbt, modélisation dimensionnelle et dashboards analytiques en temps réel.",
+  4: {
     tags: ["AWS / Azure", "Snowflake", "dbt", "Delta Lake", "Medallion"],
     color: "#3b82f6",
     emoji: "🏭",
     github: "https://github.com/aymanz12/manufacturing-quality-lakehouse",
-    category: "Data Engineering",
   },
-  {
-    id: 5,
-    title: "Project BI",
-    subtitle: "Business Intelligence avancée",
-    description:
-      "Solution BI complète avec modélisation des données, création de pipelines d'ingestion et dashboards analytiques interactifs. Reporting automatisé et KPIs métier.",
+  5: {
     tags: ["Power BI", "SQL", "ETL", "Data Modeling", "Analytics"],
     color: "#10b981",
     emoji: "📊",
     github: "https://github.com/aymanz12/Project_BI",
-    category: "Data Analytics",
   },
-  {
-    id: 6,
-    title: "Predictive Maintenance",
-    subtitle: "ML pour la maintenance prédictive",
-    description:
-      "Système de maintenance prédictive basé sur le Machine Learning pour anticiper les pannes industrielles. Feature engineering sur données IoT, modèles de classification et pipeline MLOps.",
-    tags: ["Python", "Scikit-learn", "MLOps", "IoT", "Predictive ML"],
+  6: {
+    tags: ["Python", "Scikit-Learn", "MLOps", "IoT", "Time Series"],
     color: "#ec4899",
     emoji: "⚙️",
     github: "https://github.com/aymanz12/predictive-maintenance",
-    category: "ML Engineering",
   },
-];
-
-const FILTERS = ["Tous", "AI Engineering", "Data Engineering", "Data Analytics", "ML Engineering"];
+};
 
 export default function Projects() {
+  const { lang, t } = useLanguage();
   const [activeFilter, setActiveFilter] = useState("Tous");
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const filtered = activeFilter === "Tous"
-    ? projects
-    : projects.filter((p) => p.category === activeFilter);
+  const categories: string[] = t("projects.categories") || ["Tous", "AI Engineering", "Data Engineering", "Data Analytics"];
+  const allCategoryLabel = categories[0] || "Tous";
+
+  useEffect(() => {
+    setActiveFilter(allCategoryLabel);
+  }, [lang, allCategoryLabel]);
+
+  const items: ProjectItem[] = t("projects.items") || [];
+
+  const filtered = activeFilter === allCategoryLabel
+    ? items
+    : items.filter((p) => p.category === activeFilter);
 
   return (
     <section id="projects" className="relative py-28 px-6" ref={ref}>
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-96 h-96 rounded-full opacity-5" style={{ background: "radial-gradient(circle,#3b82f6,transparent)", left: "5%", bottom: "10%" }} />
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <span className="text-blue-400 text-sm font-mono font-medium tracking-widest uppercase mb-3 block">
-            04. Projets
+          <span className="text-cyan-400 text-sm font-mono font-medium tracking-widest uppercase mb-3 block">
+            04. {t("projects.badge")}
           </span>
           <h2 className="section-title text-4xl md:text-5xl text-white mb-4">
-            Ce que j&apos;ai construit
+            {t("projects.title")}
           </h2>
-          <div className="w-16 h-1 rounded-full mx-auto" style={{ background: "linear-gradient(90deg,#7c3aed,#06b6d4)" }} />
-        </motion.div>
+          <p className="text-slate-400 text-base max-w-xl mx-auto mb-4">
+            {t("projects.subtitle")}
+          </p>
+          <div
+            className="w-16 h-1 rounded-full mx-auto mb-10"
+            style={{ background: "linear-gradient(90deg,#7c3aed,#06b6d4)" }}
+          />
 
-        {/* Filter pills */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-2 mb-10"
-        >
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              onClick={() => setActiveFilter(f)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                activeFilter === f
-                  ? "text-white neon-glow"
-                  : "glass-card text-slate-400 hover:text-white"
-              }`}
-              style={
-                activeFilter === f
-                  ? { background: "linear-gradient(135deg,#7c3aed,#3b82f6)", border: "none" }
-                  : {}
-              }
-            >
-              {f}
-            </button>
-          ))}
-        </motion.div>
-
-        {/* Projects grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project, i) => (
-              <motion.div
-                key={project.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.4, delay: i * 0.07 }}
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
-                className="glass-card glass-card-hover rounded-2xl overflow-hidden group cursor-default relative"
-                style={{ borderColor: hoveredId === project.id ? project.color + "40" : undefined }}
+          {/* Filter Pills */}
+          <div className="flex flex-wrap justify-center gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveFilter(cat)}
+                className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 border ${
+                  activeFilter === cat
+                    ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white border-violet-500/50 shadow-lg shadow-violet-500/20"
+                    : "glass-card text-slate-400 border-white/06 hover:text-white hover:border-white/20"
+                }`}
               >
-                {/* Top colored bar */}
-                <div className="h-1 w-full" style={{ background: `linear-gradient(90deg, ${project.color}, transparent)` }} />
-
-                <div className="p-6">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-3">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
-                      style={{ background: project.color + "22" }}
-                    >
-                      {project.emoji}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="project-tag"
-                        style={{ background: project.color + "22", color: project.color }}
-                      >
-                        {project.category}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-lg font-bold text-white mb-1 group-hover:text-white/90 transition-colors" style={{ fontFamily: "'Space Grotesk',sans-serif" }}>
-                    {project.title}
-                  </h3>
-                  <p className="text-xs text-slate-500 font-mono mb-3">{project.subtitle}</p>
-
-                  {/* Description */}
-                  <p className="text-slate-400 text-sm leading-relaxed mb-5 line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
-                    {project.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs font-mono px-2 py-0.5 rounded-md"
-                        style={{ background: project.color + "15", color: project.color }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Footer links */}
-                  <div className="flex items-center gap-3 pt-3 border-t border-white/05">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors"
-                    >
-                      <Github size={15} />
-                      <span>Code</span>
-                    </a>
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-sm text-slate-400 hover:text-white transition-colors ml-auto"
-                    >
-                      <ExternalLink size={14} />
-                      <span>Voir</span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* Hover glow */}
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300"
-                  style={{ background: `radial-gradient(circle at 50% 0%, ${project.color}08, transparent 70%)` }}
-                />
-              </motion.div>
+                {cat}
+              </button>
             ))}
-          </AnimatePresence>
+          </div>
         </motion.div>
 
-        {/* GitHub CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-center mt-12"
-        >
-          <a
-            href="https://github.com/aymanz12"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-secondary inline-flex items-center gap-2"
-          >
-            <Github size={18} />
-            <span>Voir tous les projets sur GitHub</span>
-          </a>
+        {/* Projects Grid */}
+        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence>
+            {filtered.map((project) => {
+              const meta = projectMeta[project.id] || {
+                tags: [],
+                color: "#7c3aed",
+                emoji: "🚀",
+                github: "https://github.com/aymanz12",
+              };
+              const isHovered = hoveredId === project.id;
+
+              return (
+                <motion.div
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4 }}
+                  onMouseEnter={() => setHoveredId(project.id)}
+                  onMouseLeave={() => setHoveredId(null)}
+                  className="glass-card glass-card-hover rounded-2xl p-6 flex flex-col justify-between group border border-white/08 relative overflow-hidden"
+                >
+                  {/* Subtle top glow */}
+                  <div
+                    className="absolute -top-12 -right-12 w-28 h-28 rounded-full opacity-15 blur-xl transition-all duration-500 group-hover:opacity-35"
+                    style={{ background: meta.color }}
+                  />
+
+                  <div>
+                    {/* Top bar */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div
+                        className="w-11 h-11 rounded-xl flex items-center justify-center text-xl shadow-inner border border-white/10"
+                        style={{ background: meta.color + "18" }}
+                      >
+                        {meta.emoji}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={meta.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="GitHub"
+                          className="glass-card p-2 rounded-lg text-slate-400 hover:text-white transition-all hover:scale-110"
+                        >
+                          <Github size={16} />
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Category pill */}
+                    <span
+                      className="text-[11px] font-mono font-medium px-2.5 py-0.5 rounded-full inline-block mb-2"
+                      style={{ background: meta.color + "15", color: meta.color }}
+                    >
+                      {project.category}
+                    </span>
+
+                    {/* Title & subtitle */}
+                    <h3 className="text-lg font-bold text-white mb-1 group-hover:text-violet-300 transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs text-violet-400/90 font-medium mb-3">
+                      {project.subtitle}
+                    </p>
+
+                    {/* Description */}
+                    <p className="text-xs text-slate-400 leading-relaxed line-clamp-4 mb-4">
+                      {project.description}
+                    </p>
+                  </div>
+
+                  {/* Tags & Action */}
+                  <div>
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {meta.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2 py-0.5 text-[10px] font-mono rounded-md bg-white/04 border border-white/06 text-slate-400"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <a
+                      href={meta.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-semibold glass-card border border-white/08 hover:border-violet-500/40 text-slate-300 hover:text-white transition-all group-hover:bg-white/06"
+                    >
+                      <Github size={14} />
+                      <span>{t("projects.github_btn")}</span>
+                      <ExternalLink size={12} className="opacity-60" />
+                    </a>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </motion.div>
       </div>
     </section>

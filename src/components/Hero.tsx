@@ -1,25 +1,33 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { motion, type Variants } from "framer-motion";
-import { ArrowDown, Mail, Download, Sparkles } from "lucide-react";
+import { ArrowDown, Mail, Sparkles } from "lucide-react";
 import { Github, Linkedin } from "./Icons";
-
-const ROLES = [
-  "Data Engineer (Multi-Cloud)",
-  "AI Engineer",
-  "LangGraph & RAG Expert",
-  "Cloud Data Architect (AWS / Azure / Snowflake)",
-  "Multi-Agent Systems",
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Hero() {
+  const { lang, t } = useLanguage();
+  const roles: string[] = t("hero.roles") || [
+    "Data Engineer (Multi-Cloud)",
+    "AI Engineer",
+    "LangGraph & RAG Expert",
+    "Cloud Data Architect (AWS / Azure / Snowflake)",
+    "Multi-Agent Systems",
+  ];
+
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   useEffect(() => {
-    const current = ROLES[roleIndex];
+    setDisplayed("");
+    setRoleIndex(0);
+    setIsDeleting(false);
+  }, [lang]);
+
+  useEffect(() => {
+    const current = roles[roleIndex % roles.length];
     const speed = isDeleting ? 40 : 80;
 
     timeoutRef.current = setTimeout(() => {
@@ -32,13 +40,15 @@ export default function Hero() {
         setDisplayed(current.slice(0, displayed.length - 1));
         if (displayed.length === 0) {
           setIsDeleting(false);
-          setRoleIndex((prev) => (prev + 1) % ROLES.length);
+          setRoleIndex((prev) => (prev + 1) % roles.length);
         }
       }
     }, speed);
 
-    return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
-  }, [displayed, isDeleting, roleIndex]);
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [displayed, isDeleting, roleIndex, roles]);
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -97,7 +107,7 @@ export default function Hero() {
         <motion.div variants={itemVariants} className="flex justify-center mb-6">
           <div className="gradient-border inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass-card text-sm font-medium text-slate-300">
             <Sparkles size={14} className="text-violet-400" />
-            Recherche Stage PFE — Data/AI Engineering
+            {t("hero.badge")}
           </div>
         </motion.div>
 
@@ -126,14 +136,15 @@ export default function Hero() {
           variants={itemVariants}
           className="text-slate-400 text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Ingénieur 5e année à l&apos;
-          <span className="text-white font-medium">ENSA Tétouan</span> — spécialisé
-          en Data Engineering{" "}
-          <span className="text-violet-400">(Multi-Cloud : AWS, Azure, Snowflake, dbt, Medallion)</span> et AI
-          Engineering{" "}
-          <span className="text-cyan-400">(LangGraph, RAG, GenAI)</span>. Expérience
-          concrète en{" "}
-          <span className="text-white font-medium">Banque Centrale</span>.
+          {t("hero.description_prefix")}
+          <span className="text-white font-medium">{t("hero.school")}</span>
+          {t("hero.description_mid")}
+          <span className="text-violet-400">{t("hero.skills_data")}</span>
+          {t("hero.description_and")}
+          <span className="text-cyan-400">{t("hero.skills_ai")}</span>
+          {t("hero.description_end")}
+          <span className="text-white font-medium">{t("hero.company")}</span>
+          {t("hero.description_final")}
         </motion.p>
 
         {/* CTAs */}
@@ -147,7 +158,7 @@ export default function Hero() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span>Voir mes projets</span>
+            <span>{t("hero.cta_projects")}</span>
             <ArrowDown size={16} />
           </motion.a>
           <motion.a
@@ -157,7 +168,7 @@ export default function Hero() {
             whileTap={{ scale: 0.95 }}
           >
             <Mail size={16} />
-            <span>Me contacter</span>
+            <span>{t("hero.cta_contact")}</span>
           </motion.a>
         </motion.div>
 
@@ -204,7 +215,7 @@ export default function Hero() {
           transition={{ delay: 2, duration: 1 }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600"
         >
-          <span className="text-xs uppercase tracking-widest">scroll</span>
+          <span className="text-xs uppercase tracking-widest">{t("hero.scroll")}</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}

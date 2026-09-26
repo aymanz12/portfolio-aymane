@@ -1,3 +1,5 @@
+"use client";
+import { LanguageProvider } from "@/context/LanguageContext";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -11,17 +13,19 @@ import ParticlesBackground from "@/components/ParticlesBackground";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-[#07090e] text-slate-100 overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
-      <ParticlesBackground />
-      <Navbar />
-      <Hero />
-      <About />
-      <Experience />
-      <Skills />
-      <Projects />
-      <Education />
-      <Contact />
-      <Footer />
-    </main>
+    <LanguageProvider>
+      <main className="relative min-h-screen bg-[#07090e] text-slate-100 overflow-x-hidden selection:bg-violet-500/30 selection:text-violet-200">
+        <ParticlesBackground />
+        <Navbar />
+        <Hero />
+        <About />
+        <Experience />
+        <Skills />
+        <Projects />
+        <Education />
+        <Contact />
+        <Footer />
+      </main>
+    </LanguageProvider>
   );
 }

@@ -2,58 +2,65 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { Mail, MapPin, Send, MessageSquare, Sparkles } from "lucide-react";
+import { Mail, MapPin, Send, MessageSquare, CheckCircle } from "lucide-react";
 import { Github, Linkedin } from "./Icons";
-
-const socials = [
-  {
-    icon: <Github size={20} />,
-    label: "GitHub",
-    handle: "@aymanz12",
-    href: "https://github.com/aymanz12",
-    color: "#fff",
-    bg: "rgba(255,255,255,0.06)",
-  },
-  {
-    icon: <Linkedin size={20} />,
-    label: "LinkedIn",
-    handle: "Aymane Azaagag",
-    href: "https://www.linkedin.com/in/aymane-azaagag-912816330/",
-    color: "#0ea5e9",
-    bg: "rgba(14,165,233,0.1)",
-  },
-  {
-    icon: <Mail size={20} />,
-    label: "Email",
-    handle: "aymane.azaagag@email.com",
-    href: "mailto:aymane.azaagag@email.com",
-    color: "#7c3aed",
-    bg: "rgba(124,58,237,0.1)",
-  },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [sent, setSent] = useState(false);
+  const { t } = useLanguage();
+
+  const socials = [
+    {
+      icon: <Linkedin size={20} />,
+      label: "LinkedIn",
+      handle: "Aymane Azaagag",
+      href: "https://www.linkedin.com/in/aymane-azaagag-912816330/",
+      color: "#0ea5e9",
+      bg: "rgba(14,165,233,0.1)",
+    },
+    {
+      icon: <Github size={20} />,
+      label: "GitHub",
+      handle: "@aymanz12",
+      href: "https://github.com/aymanz12",
+      color: "#fff",
+      bg: "rgba(255,255,255,0.06)",
+    },
+    {
+      icon: <Mail size={20} />,
+      label: "Email",
+      handle: "aymane.azaagag@email.com",
+      href: "mailto:aymane.azaagag@email.com",
+      color: "#7c3aed",
+      bg: "rgba(124,58,237,0.1)",
+    },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const mailto = `mailto:aymane.azaagag@email.com?subject=${encodeURIComponent(form.subject || "Portfolio Contact")}&body=${encodeURIComponent(`De: ${form.name} (${form.email})\n\n${form.message}`)}`;
+    const mailto = `mailto:aymane.azaagag@email.com?subject=${encodeURIComponent(
+      form.subject || "Portfolio Contact"
+    )}&body=${encodeURIComponent(`De: ${form.name} (${form.email})\n\n${form.message}`)}`;
     window.open(mailto);
     setSent(true);
-    setTimeout(() => setSent(false), 4000);
+    setTimeout(() => setSent(false), 5000);
   };
 
   const inputClass =
-    "w-full glass-card rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none focus:border-violet-500/60 transition-all duration-200 bg-transparent";
+    "w-full glass-card rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-600 outline-none focus:border-violet-500/60 transition-all duration-200 bg-transparent border border-white/08";
 
   return (
     <section id="contact" className="relative py-28 px-6" ref={ref}>
       {/* Bg blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute w-96 h-96 rounded-full opacity-8" style={{ background: "radial-gradient(circle,#7c3aed,transparent)", left: "30%", top: "0" }} />
+        <div
+          className="blob absolute w-96 h-96 rounded-full opacity-10"
+          style={{ background: "radial-gradient(circle,#7c3aed,transparent)", left: "30%", top: "0" }}
+        />
       </div>
 
       <div className="max-w-5xl mx-auto relative z-10">
@@ -65,16 +72,18 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <span className="text-cyan-400 text-sm font-mono font-medium tracking-widest uppercase mb-3 block">
-            06. Contact
+            06. {t("contact.badge")}
           </span>
           <h2 className="section-title text-4xl md:text-5xl text-white mb-4">
-            Travaillons ensemble
+            {t("contact.title")}
           </h2>
-          <p className="text-slate-400 max-w-xl mx-auto">
-            Je recherche activement un <span className="text-white font-medium">Stage PFE</span> en Data ou AI Engineering.
-            N&apos;hésitez pas à me contacter !
+          <p className="text-slate-400 max-w-xl mx-auto text-base">
+            {t("contact.subtitle")}
           </p>
-          <div className="w-16 h-1 rounded-full mx-auto mt-4" style={{ background: "linear-gradient(90deg,#7c3aed,#06b6d4)" }} />
+          <div
+            className="w-16 h-1 rounded-full mx-auto mt-4"
+            style={{ background: "linear-gradient(90deg,#7c3aed,#06b6d4)" }}
+          />
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
@@ -89,39 +98,44 @@ export default function Contact() {
             <div className="gradient-border glass-card rounded-2xl p-6">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
-                <span className="text-green-400 font-semibold text-sm">Disponible maintenant</span>
+                <span className="text-green-400 font-semibold text-sm">
+                  {t("contact.available_title")}
+                </span>
               </div>
               <p className="text-slate-400 text-sm leading-relaxed">
-                À la recherche d&apos;un stage PFE (6 mois) à partir de <strong className="text-white">début 2027</strong> en Data Engineering ou AI Engineering.
+                {t("contact.available_desc")}
               </p>
-              <div className="flex items-center gap-1.5 mt-3 text-sm text-slate-500">
-                <MapPin size={13} />
-                <span>Tétouan, Maroc — Remote OK</span>
+              <div className="flex items-center gap-1.5 mt-3 text-xs text-slate-500">
+                <MapPin size={13} className="text-violet-400" />
+                <span>Tétouan, Maroc · On-site / Hybrid / Remote</span>
               </div>
             </div>
 
-            {/* Social links */}
-            {socials.map((s, i) => (
-              <motion.a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 15 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.2 + i * 0.1 }}
-                className="glass-card glass-card-hover rounded-xl p-4 flex items-center gap-4 group"
-                style={{ borderColor: s.color + "20" }}
-              >
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 transition-all group-hover:scale-110" style={{ background: s.bg, color: s.color }}>
-                  {s.icon}
-                </div>
-                <div>
-                  <div className="text-xs text-slate-500 mb-0.5">{s.label}</div>
-                  <div className="text-sm font-medium text-white">{s.handle}</div>
-                </div>
-              </motion.a>
-            ))}
+            {/* Social cards */}
+            <div className="space-y-3">
+              {socials.map((s, i) => (
+                <a
+                  key={i}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="glass-card glass-card-hover rounded-xl p-4 flex items-center gap-4 group transition-all duration-200 border border-white/06"
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110"
+                    style={{ background: s.bg, color: s.color }}
+                  >
+                    {s.icon}
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-400 font-mono">{s.label}</div>
+                    <div className="text-sm font-semibold text-white group-hover:text-violet-300 transition-colors">
+                      {s.handle}
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
           </motion.div>
 
           {/* Right — form */}
@@ -131,87 +145,97 @@ export default function Contact() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-3"
           >
-            <div className="glass-card rounded-2xl p-6 md:p-8">
-              <div className="flex items-center gap-2 mb-6">
-                <MessageSquare size={18} className="text-violet-400" />
-                <h3 className="text-lg font-bold text-white" style={{ fontFamily: "'Space Grotesk',sans-serif" }}>
-                  Envoyez-moi un message
-                </h3>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs text-slate-500 mb-1.5 block font-medium uppercase tracking-wide">Nom</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Votre nom"
-                      value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      className={inputClass}
-                      id="contact-name"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs text-slate-500 mb-1.5 block font-medium uppercase tracking-wide">Email</label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="votre@email.com"
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className={inputClass}
-                      id="contact-email"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-xs text-slate-500 mb-1.5 block font-medium uppercase tracking-wide">Sujet</label>
+            <form
+              onSubmit={handleSubmit}
+              className="glass-card rounded-2xl p-6 md:p-8 space-y-4 border border-white/08 relative"
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-mono text-slate-400">
+                    {t("contact.form.name")}
+                  </label>
                   <input
                     type="text"
-                    placeholder="Proposition de stage PFE..."
-                    value={form.subject}
-                    onChange={(e) => setForm({ ...form, subject: e.target.value })}
-                    className={inputClass}
-                    id="contact-subject"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-xs text-slate-500 mb-1.5 block font-medium uppercase tracking-wide">Message</label>
-                  <textarea
                     required
-                    rows={5}
-                    placeholder="Bonjour Aymane, je souhaite vous proposer..."
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className={inputClass + " resize-none"}
-                    id="contact-message"
+                    placeholder={t("contact.form.name_placeholder")}
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className={inputClass}
                   />
                 </div>
 
-                <motion.button
-                  type="submit"
-                  className="btn-primary w-full flex items-center justify-center gap-2"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-mono text-slate-400">
+                    {t("contact.form.email")}
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder={t("contact.form.email_placeholder")}
+                    value={form.email}
+                    onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-mono text-slate-400">
+                  {t("contact.form.subject")}
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder={t("contact.form.subject_placeholder")}
+                  value={form.subject}
+                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                  className={inputClass}
+                />
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-xs font-mono text-slate-400">
+                  {t("contact.form.message")}
+                </label>
+                <textarea
+                  rows={5}
+                  required
+                  placeholder={t("contact.form.message_placeholder")}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  className={`${inputClass} resize-none`}
+                />
+              </div>
+
+              <motion.button
+                type="submit"
+                className="w-full btn-primary flex items-center justify-center gap-2 py-3.5 text-sm font-semibold"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {sent ? (
+                  <>
+                    <CheckCircle size={16} className="text-green-300" />
+                    <span>{t("contact.form.sent")}</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={16} />
+                    <span>{t("contact.form.send")}</span>
+                  </>
+                )}
+              </motion.button>
+
+              {sent && (
+                <motion.p
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-xs text-green-400 text-center font-medium mt-2"
                 >
-                  {sent ? (
-                    <>
-                      <Sparkles size={16} />
-                      <span>Message ouvert dans votre client mail !</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send size={16} />
-                      <span>Envoyer le message</span>
-                    </>
-                  )}
-                </motion.button>
-              </form>
-            </div>
+                  {t("contact.form.success_msg")}
+                </motion.p>
+              )}
+            </form>
           </motion.div>
         </div>
       </div>

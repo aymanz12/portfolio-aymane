@@ -1,27 +1,28 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
-
-const links = [
-  { href: "#about", label: "À Propos" },
-  { href: "#experience", label: "Expériences" },
-  { href: "#skills", label: "Compétences" },
-  { href: "#projects", label: "Projets" },
-  { href: "#education", label: "Formation" },
-  { href: "#contact", label: "Contact" },
-];
+import { Menu, X, Globe } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const { lang, setLang, t } = useLanguage();
+
+  const links = [
+    { href: "#about", label: t("nav.about") },
+    { href: "#experience", label: t("nav.experience") },
+    { href: "#skills", label: t("nav.skills") },
+    { href: "#projects", label: t("nav.projects") },
+    { href: "#education", label: t("nav.education") },
+    { href: "#contact", label: t("nav.contact") },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 30);
-      // Update active section
-      const sections = links.map((l) => l.href.replace("#", ""));
+      const sections = ["about", "experience", "skills", "projects", "education", "contact"];
       for (const section of [...sections].reverse()) {
         const el = document.getElementById(section);
         if (el && window.scrollY >= el.offsetTop - 150) {
@@ -60,7 +61,7 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+              className={`relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                 active === link.href.replace("#", "")
                   ? "text-white"
                   : "text-slate-400 hover:text-white"
@@ -79,23 +80,77 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* CTA */}
-        <motion.a
-          href="#contact"
-          className="hidden md:flex btn-primary text-sm"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <span>Contactez-moi</span>
-        </motion.a>
+        {/* Right side: Language Switcher + CTA */}
+        <div className="hidden md:flex items-center gap-3">
+          {/* Language Switcher */}
+          <div className="flex items-center bg-white/[0.04] border border-white/10 rounded-full p-1 text-xs font-semibold">
+            <button
+              onClick={() => setLang("fr")}
+              className={`px-2.5 py-1 rounded-full transition-all duration-200 ${
+                lang === "fr"
+                  ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-500/20"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              FR
+            </button>
+            <button
+              onClick={() => setLang("en")}
+              className={`px-2.5 py-1 rounded-full transition-all duration-200 ${
+                lang === "en"
+                  ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md shadow-violet-500/20"
+                  : "text-slate-400 hover:text-slate-200"
+              }`}
+            >
+              EN
+            </button>
+          </div>
 
-        {/* Mobile burger */}
-        <button
-          className="md:hidden p-2 rounded-lg border border-white/10 text-slate-400"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+          {/* CTA */}
+          <motion.a
+            href="#contact"
+            className="btn-primary text-sm"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span>{t("nav.cta")}</span>
+          </motion.a>
+        </div>
+
+        {/* Mobile: Lang toggle + Burger */}
+        <div className="md:hidden flex items-center gap-2">
+          {/* Mobile Language Switcher */}
+          <div className="flex items-center bg-white/[0.04] border border-white/10 rounded-full p-0.5 text-xs font-semibold">
+            <button
+              onClick={() => setLang("fr")}
+              className={`px-2 py-0.5 rounded-full transition-all ${
+                lang === "fr"
+                  ? "bg-violet-600 text-white"
+                  : "text-slate-400"
+              }`}
+            >
+              FR
+            </button>
+            <button
+              onClick={() => setLang("en")}
+              className={`px-2 py-0.5 rounded-full transition-all ${
+                lang === "en"
+                  ? "bg-violet-600 text-white"
+                  : "text-slate-400"
+              }`}
+            >
+              EN
+            </button>
+          </div>
+
+          <button
+            className="p-2 rounded-lg border border-white/10 text-slate-400"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -118,8 +173,12 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <a href="#contact" className="btn-primary text-center text-sm mt-2">
-                <span>Contactez-moi</span>
+              <a
+                href="#contact"
+                onClick={() => setMenuOpen(false)}
+                className="btn-primary text-center text-sm mt-2"
+              >
+                <span>{t("nav.cta")}</span>
               </a>
             </nav>
           </motion.div>
